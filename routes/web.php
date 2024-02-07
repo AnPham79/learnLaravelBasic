@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 
@@ -14,6 +15,5 @@ use App\Http\Controllers\TestController;
 |
 */
 
-Route::get('/', [TestController::class, 'form']);
-Route::post('/post', [TestController::class, 'post']);
+Route::get('/', [StudentController::class, 'index']);
 
