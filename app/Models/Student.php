@@ -9,7 +9,12 @@ class Student extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $dates = ['ngaysinh'];
+    protected $gender = ['gioitinh'];
+    protected $fillable = [
+        'hosinhvien', 'tensinhvien', 'ngaysinh', 'gioitinh'
+    ];
 
     public function getFullNameAttribute()
     {
@@ -19,6 +24,11 @@ class Student extends Model
     public function getAgeAttribute()
     {
         return $this->ngaysinh->age;
+    }
+
+    public function getGender()
+    {
+        return ($this->gioitinh === 1) ? 'Nam' : 'Nữ';
     }
 }
 

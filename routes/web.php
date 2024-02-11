@@ -15,5 +15,12 @@ use App\Http\Controllers\TestController;
 |
 */
 
-Route::get('/', [StudentController::class, 'index']);
+
+
+Route::group(['prefix' => 'student', 'as' => 'student.'], function () {
+    Route::get('/', [StudentController::class, 'index'])->name('index');
+    Route::get('/create', [StudentController::class, 'create'])->name('create');
+    Route::post('/create', [StudentController::class, 'store'])->name('store');
+    Route::delete('/destroy/{student}', [StudentController::class, 'destroy'])->name('destroy');
+});
 
