@@ -9,12 +9,19 @@
 <br>
 
 <table border="1" width="100%">
+    <caption>
+        <form action="">
+            Tìm kiếm sinh viên : 
+            <input type="search" name="q" value="{{ $search }}">
+        </form>
+    </caption>
     <tr>
         <td>#</td>
         <td>Tên</td>
         <td>Ngày sinh</td>
         <td>giới tính</td>
         <td>Xóa</td>
+        <td>Sửa</td>
     </tr>
     @foreach ($student as $each)
     <tr>
@@ -29,6 +36,13 @@
                 <button>Xóa sinh viên</button>
             </form>
         </td>
+        <td>
+            <a href="{{ route('student.edit', ['student' => $each->id ])}}">
+                Sửa
+            </a>
+        </td>
     </tr>
     @endforeach   
 </table>
+
+{{-- {{ $student->links() }} --}}

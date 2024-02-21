@@ -4,21 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\Course\StoreRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\View;
 
 class CourseController extends Controller
 {
+    private string $title = 'Quản lí khóa học';
+
+    public function __construct()
+    {
+        View::share('title', $this->title);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Course::get();
+        $search = $request->get('q');
 
-        return view('khoahocView.index', [ 'data' => $data ]);
+        $data = Course::query()
+        ->where('name', 'like' , '%' . $search . '%')
+        ->paginate(3);
+
+        $data->appends(['q' => $search]);
+
+        return view('khoahocView.index', 
+        [   
+            'data' => $data, 
+            'search' => $search
+        ]);
     }
 
     /**
@@ -28,62 +46,46 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('khoahocView.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCourseRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCourseRequest $request)
+    public function store(StoreRequest $request)
+    {
+        $obj = new Course();
+        $obj->fill($request->except('_token'));
+        $obj->save();
+
+        return redirect()->route('courses.index');
+    }
+
+    public function show(Course $courses)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Course $course)
+    public function edit(Course $courses)
     {
-        //
+        return view('khoahocView.edit', [
+            'courses' => $courses
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Course $course)
+    public function update(Request $request, Course $courses)
     {
-        //
+        Course::where('id', $courses->id)->update(
+            $request->except('_token', '_method')
+        );
+
+        return redirect()->route('courses.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCourseRequest  $request
-     * @param  \App\Models\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function destroy(Course $courses)
     {
-        //
-    }
+        $courses->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Course $course)
-    {
-        //
+        return redirect()->route('courses.index');
+        // Course::destroy($course);
+        // Course::where('id', $course)->delete();
+        // dd($course);
     }
 }
