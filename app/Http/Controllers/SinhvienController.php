@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoresinhvienRequest;
 use App\Http\Requests\UpdatesinhvienRequest;
 use App\Enums\trangthaisinhvienEnum;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemAdapter;
 
 class SinhvienController extends Controller
 {
@@ -19,14 +21,9 @@ class SinhvienController extends Controller
 
     public function index()
     {
-        $data = Sinhvien::paginate(10);
+        $data = Sinhvien::with('getKhoahoc')->paginate(10);
 
-        return view(
-            'SinhvienNew.index',
-            [
-                'data' => $data,
-            ]
-        );
+        return view('SinhvienNew.index', ['data' => $data]);
     }
 
     /**
@@ -58,11 +55,12 @@ class SinhvienController extends Controller
     public function store(StoresinhvienRequest $request)
     {
         $obj = new sinhvien;
+        $path = Storage::disk('public')->put('avatars', $request->file('avatar'));
+        $obj['anhdaidien'] = $path;
         $obj->fill($request->except('_token'));
         $obj->save();
 
         // dd($obj->fill($request->except('_token')));
-
         return redirect()->route('sinhvien.index')->with('success', 'Tuyệt, bạn đã thêm thành công sinh viên !!!');
     }
 

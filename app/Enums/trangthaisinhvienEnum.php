@@ -21,4 +21,10 @@ final class trangthaisinhvienEnum extends Enum
             self::BAO_LUU => 'Bảo Lưu',
         ];
     }
+
+    public static function getKeyByValue($value)
+    {
+        // cái true gọi là strict : tương đương với 3 dấu bằng
+        return array_search($value, self::asArray(), true);
+    }
 }

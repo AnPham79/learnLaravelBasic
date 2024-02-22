@@ -37,6 +37,11 @@ class StoresinhvienRequest extends FormRequest
             'FK_ma_khoahoc' => [
                 'required',
                 Rule::exists(Course::class, 'id')
+            ],
+            'anhdaidien' => [
+                'nullable',
+                'file',
+                'image',
             ]
         ];
     }

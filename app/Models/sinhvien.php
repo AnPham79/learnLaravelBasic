@@ -4,13 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\trangthaisinhvienEnum;
+use App\Models\Course;
 
 class sinhvien extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'tensinhvien', 'gioitinh', 'ngaysinh', 'trangthai', 'FK_ma_khoahoc'
+        'tensinhvien', 
+        'gioitinh', 
+        'ngaysinh', 
+        'trangthai', 
+        'anhdaidien',
+        'FK_ma_khoahoc'
     ];
 
     public function getGenderAttribute()
@@ -27,5 +34,22 @@ class sinhvien extends Model
         $tuoi = $ngayHienTai->diff($ngaySinh)->y;
 
         return $tuoi;
+    }
+
+    public function getStatus()
+    {
+        return trangthaisinhvienEnum::getKeyByValue($this->trangthai);
+    }
+
+    public function getKhoahoc()
+    {
+        return $this->belongsTo(Course::class, 'FK_ma_khoahoc');
+    }
+
+    public function getNameCourse()
+    {
+        if ($this->getKhoahoc) {
+            return $this->getKhoahoc->name;
+        }
     }
 }

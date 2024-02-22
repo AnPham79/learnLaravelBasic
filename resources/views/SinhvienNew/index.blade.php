@@ -1,12 +1,12 @@
 @include('layout.header')
 
 <div class="container">
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
-    
+
     <h1 class="mt-5">Danh sách sinh viên</h1>
 
     <a href="{{ route('sinhvien.create') }}">
@@ -20,6 +20,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên sinh viên</th>
+                <th scope="col">Ảnh đại diện</th>
                 <th scope="col">Giới tính</th>
                 <th scope="col">Tuổi</th>
                 <th scope="col">Trạng thái</th>
@@ -31,10 +32,11 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->tensinhvien }}</td>
+                    <td><img src="{{ asset($item->anhdaidien) }}" alt="lỗi"></td>
                     <td>{{ $item->getGenderAttribute() }}</td>
                     <td>{{ $item->getAgeAttribute() }}</td>
-                    <td>{{ $item->trangthai }}</td>
-                    <td>{{ $item->FK_ma_khoahoc }}</td>
+                    <td>{{ $item->getStatus() }}</td> <!-- Sử dụng getStatus() ở đây -->
+                    <td>{{ $item->getNameCourse() }}</td>
                 </tr>
             @endforeach
         </tbody>
