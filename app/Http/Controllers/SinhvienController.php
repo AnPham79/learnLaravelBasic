@@ -19,11 +19,13 @@ class SinhvienController extends Controller
     public function index()
     {
         $data = sinhvien::all();
-        
-        return view('SinhvienNew.index',
-        [
-            'data' => $data,
-        ]);
+
+        return view(
+            'SinhvienNew.index',
+            [
+                'data' => $data,
+            ]
+        );
     }
 
     /**
@@ -33,7 +35,7 @@ class SinhvienController extends Controller
      */
     public function create()
     {
-        
+
         $course = Course::query()->get();
 
         $arrtrangthaisinhvien = trangthaisinhvienEnum::asArray();
