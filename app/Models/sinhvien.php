@@ -17,4 +17,15 @@ class sinhvien extends Model
     {
         return ($this->gioitinh === 1) ? 'Nam' : 'Nữ';
     }
+
+    public function getAgeAttribute()
+    {
+        $ngaySinh = $this->ngaysinh;
+
+        $ngayHienTai = now();
+
+        $tuoi = $ngayHienTai->diff($ngaySinh)->y;
+
+        return $tuoi;
+    }
 }

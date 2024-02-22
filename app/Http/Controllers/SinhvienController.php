@@ -16,9 +16,10 @@ class SinhvienController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $data = sinhvien::all();
+        $data = Sinhvien::paginate(10);
 
         return view(
             'SinhvienNew.index',

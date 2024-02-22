@@ -21,7 +21,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Tên sinh viên</th>
                 <th scope="col">Giới tính</th>
-                <th scope="col">Ngày sinh</th>
+                <th scope="col">Tuổi</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Khóa học</th>
             </tr>
@@ -32,13 +32,15 @@
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->tensinhvien }}</td>
                     <td>{{ $item->getGenderAttribute() }}</td>
-                    <td>{{ $item->ngaysinh }}</td>
+                    <td>{{ $item->getAgeAttribute() }}</td>
                     <td>{{ $item->trangthai }}</td>
                     <td>{{ $item->FK_ma_khoahoc }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    {{ $data->links() }}
 </div>
 
 @include('layout.footer')
