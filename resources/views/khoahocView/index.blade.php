@@ -4,6 +4,16 @@
 
     <h4 class="title my-5">{{ $title }}</h4>
 
+    @if (session('danger'))
+        <div class="alert alert-danger">
+            {{ session('danger') }}
+        </div>
+    @endif
+    
+    <a href="{{ route('logout') }}" style="float: right">Đăng xuất</a>
+    <span style="float: right" class="account-user-name">Xin chào: {{ session()->get('name') }}</span>
+    {{-- <span style="float: right" class="account-position">{{ session()->get('level') ? 'Super Admin' : 'Admin' }}</span> --}}
+
 
     <a href="{{ route('courses.create') }}" class="btn btn-primary mb-3">Thêm khóa học tại đây</a>
 

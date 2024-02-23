@@ -6,6 +6,9 @@
             {{ session('success') }}
         </div>
     @endif
+    
+    <span style="float: right" class="account-user-name">Xin chào: {{ session()->get('name') }}</span>
+    {{-- <span style="float: right" class="account-position">{{ session()->get('level') ? 'Super Admin' : 'Admin' }}</span> --}}
 
     <h1 class="mt-5">Danh sách sinh viên</h1>
 

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Course;
 use App\Models\sinhvien;
+use App\Models\user;
 use App\Enums\trangthaisinhvienEnum;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
     {
         Course::factory(10)->create();
         sinhvien::factory(500)->create();
+        $this->call([UserSeeder::class]);
     }
 }
