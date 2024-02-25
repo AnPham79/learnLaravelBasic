@@ -19,4 +19,8 @@
     <input type="password" name="password">
     <br>
     <button>Đăng nhập</button>
+    <br>
+    hoặc
+    <br>
+    <button><a href="{{ route('register') }}">Đăng kí</a></button>
 </form>
